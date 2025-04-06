@@ -24,7 +24,7 @@ function Settings() {
 
   useEffect(() => {
     const fetchSettings = async () => {
-      const userId = 'default_user'; // Replace with auth.currentUser.uid
+      const userId = 'default_user'; 
       const docRef = doc(db, 'settings', userId);
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {

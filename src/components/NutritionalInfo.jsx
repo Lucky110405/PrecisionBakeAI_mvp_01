@@ -1,51 +1,56 @@
 import React from 'react';
-import { Typography, Paper, Box } from '@mui/material';
-import { styled } from '@mui/material/styles';
+import { Box, Typography, List, ListItem, ListItemText, Divider } from '@mui/material';
 
-const NutritionPaper = styled(Paper)(({ theme }) => ({
-  p: 3,
-  bgcolor: theme.palette.grey[50],
-  borderRadius: 12,
-}));
-
-function NutritionalInfo({ ingredients }) {
-  const convertToGrams = (ingredient) => {
-    const { amount, unit, densityData } = ingredient;
-    const density = densityData.density || 1;
-    if (unit === 'cups') return (amount * 236.6 * density).toFixed(1);
-    if (unit === 'tablespoons') return (amount * 14.8 * density).toFixed(1);
-    if (unit === 'teaspoons') return (amount * 4.9 * density).toFixed(1);
-    return amount;
-  };
-
+const NutritionalInfo = ({ ingredients }) => {
   const calculateNutrition = () => {
-    return ingredients.reduce((acc, item) => {
-      const grams = unit === 'grams' ? item.amount : parseFloat(convertToGrams(item));
-      const data = item.densityData.nutritional_info || {};
+    if (!ingredients || ingredients.length === 0) {
+      return { calories: 0, protein: 0, carbs: 0, fat: 0 };
+    }
+    
+    return ingredients.reduce((acc, ingredient) => {
+
+      const nutritionalInfo = ingredient?.densityData?.nutritional_info || {};
+      
+
+      const calories = nutritionalInfo.calories || 0;
+      const protein = nutritionalInfo.protein || 0;
+      const carbs = nutritionalInfo.carbs || 0;
+      const fat = nutritionalInfo.fat || 0;
+      
+
+      const amount = ingredient?.amount || 0;
+      
       return {
-        calories: acc.calories + (data.calories || 0) * (grams / 100),
-        protein: acc.protein + (data.protein || 0) * (grams / 100),
-        fat: acc.fat + (data.fat || 0) * (grams / 100),
-        carbs: acc.carbs + (data.carbs || 0) * (grams / 100),
+        calories: acc.calories + (calories * amount),
+        protein: acc.protein + (protein * amount),
+        carbs: acc.carbs + (carbs * amount),
+        fat: acc.fat + (fat * amount)
       };
-    }, { calories: 0, protein: 0, fat: 0, carbs: 0 });
+    }, { calories: 0, protein: 0, carbs: 0, fat: 0 });
   };
 
   const nutrition = calculateNutrition();
 
   return (
-    <NutritionPaper>
-      <Typography variant="h6" gutterBottom>
-        Nutritional Info (Total)
-      </Typography>
-      <Box sx={{ display: 'grid', gap: 1 }}>
-        <Typography>Calories: {nutrition.calories.toFixed(1)} kcal</Typography>
-        <Typography>Protein: {nutrition.protein.toFixed(1)}g</Typography>
-        <Typography>Fat: {nutrition.fat.toFixed(1)}g</Typography>
-        <Typography>Carbs: {nutrition.carbs.toFixed(1)}g</Typography>
-      </Box>
-    </NutritionPaper>
+    <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+      <Typography variant="h6" gutterBottom>Nutritional Information</Typography>
+      <Divider sx={{ mb: 1 }} />
+      <List dense sx={{ flexGrow: 1 }}>
+        <ListItem>
+          <ListItemText primary="Calories" secondary={`${Math.round(nutrition.calories)} kcal`} />
+        </ListItem>
+        <ListItem>
+          <ListItemText primary="Protein" secondary={`${Math.round(nutrition.protein)} g`} />
+        </ListItem>
+        <ListItem>
+          <ListItemText primary="Carbohydrates" secondary={`${Math.round(nutrition.carbs)} g`} />
+        </ListItem>
+        <ListItem>
+          <ListItemText primary="Fat" secondary={`${Math.round(nutrition.fat)} g`} />
+        </ListItem>
+      </List>
+    </Box>
   );
-}
+};
 
 export default NutritionalInfo;

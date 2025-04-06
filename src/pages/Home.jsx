@@ -8,6 +8,8 @@ import {
   CardContent,
   Grid,
   Container,
+  CardMedia,
+  Chip,
 } from '@mui/material';
 import BakeryDiningIcon from '@mui/icons-material/BakeryDining';
 import { styled } from '@mui/material/styles';
@@ -32,6 +34,7 @@ const FeatureCard = styled(Card)(({ theme }) => ({
 function Home() {
   const navigate = useNavigate();
   const [featuredIngredient, setFeaturedIngredient] = useState(null);
+  const [featuredRecipe, setFeaturedRecipe] = useState(null);
 
   useEffect(() => {
     const fetchFeaturedIngredient = async () => {
@@ -40,6 +43,21 @@ function Home() {
       setFeaturedIngredient(ingredients[0]);
     };
     fetchFeaturedIngredient();
+  }, []);
+
+  useEffect(() => {
+    const fetchFeaturedRecipe = async () => {
+      const querySnapshot = await getDocs(collection(db, 'recipes'));
+      const recipes = querySnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+
+      if (recipes.length > 0) {
+        setFeaturedRecipe(recipes[Math.floor(Math.random() * recipes.length)]);
+      }
+    };
+    fetchFeaturedRecipe();
   }, []);
 
   return (
@@ -56,10 +74,18 @@ function Home() {
           variant="contained"
           color="secondary"
           size="large"
-          onClick={() => navigate('/recipe')}
+          onClick={() => navigate('/recipes')}
           sx={{ mt: 2, px: 4 }}
         >
-          Start Baking
+          Browse Recipes
+        </Button>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => navigate('/assistant')}
+          sx={{ mt: 2, mx: 2 }}
+        >
+          Ask AI Baking wizard
         </Button>
       </HeroBox>
 
@@ -68,23 +94,70 @@ function Home() {
           <Typography variant="h5" align="center" gutterBottom>
             Featured Ingredient
           </Typography>
-          <FeatureCard sx={{ maxWidth: 300, mx: 'auto' }}>
-            <CardContent>
-              <Typography variant="h6">{featuredIngredient.name}</Typography>
-              <Typography variant="body2" color="text.secondary">
-                Density: {featuredIngredient.density} g/mL | Cup: {featuredIngredient.volume_conversions.cup}g
-              </Typography>
-            </CardContent>
-          </FeatureCard>
+          <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+            <FeatureCard sx={{ maxWidth: { xs: '100%', sm: 350 }, width: '100%' }}>
+              <CardContent>
+                <Typography variant="h6">{featuredIngredient.name}</Typography>
+                <Typography variant="body2" color="text.secondary">
+                  Density: {featuredIngredient.density} g/mL 
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  Cup: {featuredIngredient.volume_conversions.cup}g
+                </Typography>
+              </CardContent>
+            </FeatureCard>
+          </Box>
         </Box>
       )}
 
-      <Typography variant="h5" align="center" gutterBottom>
+      {featuredRecipe && (
+        <Box sx={{ mt: 4, mb: 6 }}>
+          <Typography variant="h5" gutterBottom align="center">
+            Featured Recipe
+          </Typography>
+          <Card 
+            sx={{ 
+              maxWidth: 600, 
+              mx: 'auto', 
+              cursor: 'pointer',
+              transition: 'transform 0.3s, box-shadow 0.3s',
+              '&:hover': {
+                transform: 'translateY(-8px)',
+                boxShadow: 6
+              }
+            }}
+            onClick={() => navigate(`/recipe/${featuredRecipe.id}`, { state: { recipe: featuredRecipe, type: 'built-in' } })}
+          >
+            <CardMedia
+              component="img"
+              height={220}
+              image={featuredRecipe.image || `https://source.unsplash.com/random/600x400?${featuredRecipe.name}`}
+              alt={featuredRecipe.name}
+            />
+            <CardContent>
+              <Typography variant="h5" component="div" gutterBottom>
+                {featuredRecipe.name}
+              </Typography>
+              <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+                {featuredRecipe.description}
+              </Typography>
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <Chip label={featuredRecipe.metadata?.difficulty || 'Medium'} size="small" />
+                <Button size="small" color="primary">
+                  View Recipe
+                </Button>
+              </Box>
+            </CardContent>
+          </Card>
+        </Box>
+      )}
+
+      <Typography variant="h5" align="center" gutterBottom sx={{ mt: 5, mb: 3 }}>
         Why PrecisionBake?
       </Typography>
-      <Grid container spacing={3}>
+      <Grid container spacing={3} justifyContent="center">
         <Grid item xs={12} sm={6} md={4}>
-          <FeatureCard>
+          <FeatureCard sx={{ height: '100%' }}>
             <CardContent>
               <Typography variant="h6">Accurate Measurements</Typography>
               <Typography variant="body2" color="text.secondary">

@@ -284,7 +284,7 @@ async function seedDatabase() {
     // Density Values: Approximate values based on common baking references (e.g., King Arthur Baking, USDA). Densities vary slightly by brand or humidity, so density_variations accounts for this.
     // Volume Conversions: Calculated as density * volume (e.g., 1 cup = 236.6 mL). Rounded for simplicity.
     // Nutritional Info: Per 100g, sourced from typical nutritional databases.
-    // Add more ingredients...
+    // you can add more ingredients... But in the same format
   ];
 
   for (const ingredient of ingredients) {
