@@ -13,7 +13,7 @@ const AIAssistant = () => {
     setResponse("");
 
     try {
-      const res = await fetch("http://localhost:8000/api/ask", {
+      const res = await fetch("https://mlucky110405.pythonanywhere.com/api/ask", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
