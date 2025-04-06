@@ -14,17 +14,39 @@ function MeasurementDisplay({ ingredients }) {
   const convertToGrams = (ingredient) => {
     if (!ingredient) return "0.0";
     
-    const { amount, unit, densityData } = ingredient;
+    const { amount, unit, densityData, name } = ingredient;
     const density = densityData?.density || 1;
-    
-
     const conversions = densityData?.volume_conversions || {};
     
     try {
-
       const unitLower = (unit || '').toLowerCase();
+      const nameLower = (name || '').toLowerCase();
       
+      if (nameLower.includes('egg')) {
+        if (unitLower === 'large' || unitLower === 'whole') {
+          return (amount * (conversions.whole || 50)).toFixed(1);
+        }
+        if (unitLower === 'medium') {
+          return (amount * 44).toFixed(1);
+        }
+        if (unitLower === 'small') {
+          return (amount * 38).toFixed(1);
+        }
+      }
 
+      if (nameLower.includes('butter') && unitLower === 'stick') {
+        return (amount * 113.4).toFixed(1);
+      }
+
+      if (unitLower === 'packet' || unitLower === 'packets') {
+        if (nameLower.includes('yeast')) {
+          return (amount * (conversions.packet || 7)).toFixed(1);
+        }
+        if (nameLower.includes('gelatin')) {
+          return (amount * 7.5).toFixed(1);
+        }
+      }
+      
       if (unitLower === 'cup' || unitLower === 'cups') {
         return conversions.cup ? (amount * conversions.cup).toFixed(1) : (amount * 236.6 * density).toFixed(1);
       }
@@ -47,7 +69,9 @@ function MeasurementDisplay({ ingredients }) {
         return (amount * 453.6).toFixed(1);
       }
       
-
+      console.log(`No direct conversion for unit: "${unitLower}" for ingredient: "${nameLower}"`);
+      console.log(`Density data:`, densityData);
+      
       return amount.toFixed(1);
     } catch (error) {
       console.error("Error converting measurement:", error);
