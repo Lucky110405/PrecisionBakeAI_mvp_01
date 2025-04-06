@@ -19,6 +19,7 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 // density is in gram/ml
+// nutritional info is in per 100g of the ingredient
 
 async function seedDatabase() {
   const ingredients = [

@@ -22,7 +22,7 @@ async function addRecipes() {
       id: "recipe_001",
       name: "Chocolate Chip Cookies",
       description: "Classic chewy cookies with chocolate chips",
-      image: "https://source.unsplash.com/random/300x200?chocolate+chip+cookies",
+      image: "",
       metadata: {
         difficulty: "Easy",
         total_time_minutes: 30,
@@ -55,7 +55,7 @@ async function addRecipes() {
       id: "recipe_002",
       name: "Sourdough Bread",
       description: "Artisanal sourdough with crispy crust and chewy interior",
-      image: "https://source.unsplash.com/random/300x200?sourdough+bread",
+      image: "",
       metadata: {
         difficulty: "Hard",
         total_time_minutes: 720, 
@@ -83,7 +83,7 @@ async function addRecipes() {
       id: "recipe_003",
       name: "Vanilla Cake",
       description: "Fluffy vanilla cake for any occasion",
-      image: "https://source.unsplash.com/random/300x200?vanilla+cake",
+      image: "",
       metadata: {
         difficulty: "Medium",
         total_time_minutes: 60,
@@ -114,7 +114,7 @@ async function addRecipes() {
       id: "recipe_004",
       name: "Banana Bread",
       description: "Moist and delicious banana bread with cinnamon and nuts",
-      image: "https://source.unsplash.com/random/300x200?banana+bread",
+      image: "",
       metadata: {
         difficulty: "Easy",
         total_time_minutes: 75,
@@ -149,7 +149,7 @@ async function addRecipes() {
       id: "recipe_005",
       name: "Cinnamon Rolls",
       description: "Soft, fluffy cinnamon rolls with cream cheese frosting",
-      image: "https://source.unsplash.com/random/300x200?cinnamon+rolls",
+      image: "",
       metadata: {
         difficulty: "Medium",
         total_time_minutes: 180,
