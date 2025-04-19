@@ -138,13 +138,13 @@ INDEX_NAME=recipe_vector_index
 ## Screenshots
 
 ### Home Page
-![Home Page](https://via.placeholder.com/800x400?text=Home+Page)
+![Home Page](src\assets\Screenshot 2025-04-19 223943.png)
 
 ### Recipe Browser
-![Recipe Browser](https://via.placeholder.com/800x400?text=Recipe+Browser)
+![Recipe Browser](src\assets\Screenshot 2025-04-20 012400.png)
 
 ### AI Assistant
-![AI Assistant](https://via.placeholder.com/800x400?text=AI+Assistant)
+![AI Assistant](src\assets\Screenshot 2025-04-20 012500.png)
 
 ---
 
@@ -164,7 +164,7 @@ INDEX_NAME=recipe_vector_index
 ---
 
 ## Status:
-✅ First-phase MVP is live and e are still under active development
+✅ First-phase MVP is live and we are still under active development
 
 ---
 
