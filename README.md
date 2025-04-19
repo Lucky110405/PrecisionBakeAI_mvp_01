@@ -138,13 +138,13 @@ INDEX_NAME=recipe_vector_index
 ## Screenshots
 
 ### Home Page
-![Home Page](src\assets\Screenshot 2025-04-19 223943.png)
+![Home Page](https://github.com/Lucky110405/PrecisionBakeAI_mvp_01/blob/main/src/assets/Screenshot%202025-04-19%20223943.png?raw=true)
 
 ### Recipe Browser
-![Recipe Browser](src\assets\Screenshot 2025-04-20 012400.png)
+![Recipe Browser](https://github.com/Lucky110405/PrecisionBakeAI_mvp_01/blob/main/src/assets/Screenshot%202025-04-20%20012400.png?raw=true)
 
 ### AI Assistant
-![AI Assistant](src\assets\Screenshot 2025-04-20 012500.png)
+![AI Assistant](https://github.com/Lucky110405/PrecisionBakeAI_mvp_01/blob/main/src/assets/Screenshot%202025-04-20%20012500.png?raw=true)
 
 ---
 
